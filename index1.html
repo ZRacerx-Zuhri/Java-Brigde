@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HBD</title>
+    <link href="https://fonts.googleapis.com/css?family=Play&display=swap" rel="stylesheet">
+    <script>
+        var i = 0;
+        var txt = "Happy Birthday To You :)"; /* The text */
+        var speed = 80; /* The speed/duration of the effect in milliseconds */
+
+        function typeWriter() {
+            document.getElementById("im").style.display = "inline"
+            if (i < txt.length) {
+                document.getElementById("ok").innerHTML += txt.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+
+
+        }
+    </script>
+</head>
+
+<body>
+
+    <div style="text-align: center;">
+        <button onclick="typeWriter()">Click me</button>
+
+        <p id="ok" style="font-size: 3vw;font-family: 'Play', sans-serif;"></p>
+        <img id="im" style="display: none;"
+            src="https://www.shutterfly.com/ideas/wp-content/uploads/2016/08/50-happy-birthday-quotes-thumb.jpg"
+            alt="Smiley face" width="35%">
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--
+    <script src="es6-shim.js"></script>
+    <script src="websdk.client.bundle.min.js"></script>
+    <script src="fingerprint.sdk.min.js"></script>
+    <script
+        src="https://polyfill.io/v3/polyfill.min.js?features=Symbol%2Cfetch%2CString.prototype.endsWith%2CObject.assign%2CArray.prototype.findIndex%2CArray.prototype.includes"></script>
+
+     -->
+
+
+    <script>
+
+
+
+
+        let cek = async () => {
+            // 0x05ba
+            // 0x1b55
+            try {
+                let device = await navigator.usb.requestDevice({ filters: [{ vendorId: 0x1b55 }] })
+                await device.open()
+                await device.selectConfiguration(1)
+                await device.claimInterface(0)
+                console.log(device.configuration)
+
+
+                const setup = {
+                    requestType: 'class',
+                    recipient: 'interface',
+                    request: 12,
+                    value: 0x004e,
+                    index: 0x00
+
+                }
+
+                console.log(await device.controlTransferIn(setup, 9))
+
+                // console.log(hasil)
+                // await device.transferOut(2, 512)
+
+                console.log(await device.transferIn(1, 9))
+
+                // let result = await result1.transferOut(2, 64)
+                // let decoder = new TextDecoder();
+                // console.log('Received: ' + decoder.decode(result.data));
+                // console.log(hasil2)
+
+
+
+            } catch (error) {
+                console.log(error)
+            }
+
+
+
+
+
+
+
+
+        }
+
+
+        let read = () => {
+            navigator.usb.addEventListener('connect', event => {
+                return console.log(event)
+            })
+
+        }
+
+
+    </script>
+
+    <script>
+
+        let b = () => {
+
+            let file = document.getElementById("finger")
+
+            var c = document.createElement('canvas');
+
+            c.height = file.naturalHeight;
+            c.width = file.naturalWidth;
+            var ctx = c.getContext('2d');
+
+            ctx.drawImage(file, 0, 0, c.width, c.height);
+            var base64String = c.toDataURL();
+
+
+            //base64img
+            let base64mark = ';base64,'
+            let base64Index = base64String.indexOf(base64mark) + base64mark.length;
+            let base64 = base64String.substring(base64Index)
+
+
+
+            var binary_string = window.atob(base64);
+            var len = binary_string.length;
+            var bytes = new Uint8Array(len);
+            for (var i = 0; i < len; i++) {
+                bytes[i] = binary_string.charCodeAt(i);
+            }
+            let buf = bytes.buffer
+
+            console.log(buf)
+        }
+
+
+
+    </script>
+    <title>Document</title>
+</head>
+
+<body>
+    <img src="./finger/finger.png" id="finger">
+    <button onclick="b()">
+
+        read
+
+    </button>
+
+    <button onclick="onDeviceFound()">
+
+        connected
+
+    </button>
+</body>
+
+</html>
